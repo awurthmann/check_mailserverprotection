@@ -1,5 +1,7 @@
 # check_mailserverprotection
 
+Based on and converted from the PowerShell script with the same name.
+
 Checks the following email-related attributes for a provided domain:
 - Mail Servers (MX Records)
 - SPF record
@@ -24,8 +26,12 @@ You may redistribute copies of the code under the terms of the GPL v3.
 This script was created to streamline email server-related checks for assessments and reconnaissance.
 
 ## Instructions:
-- Download `check_mail_server_protection.py`
+- Download `check_mail_server.py`
 - Run the script using Python:
   ```bash
-  python check_mail_server_protection.py --domain github.com
-  python check_mail_server_protection.py --domain github.com --selector google
+  python check_mail_server.py --domain github.com
+  python check_mail_server.py --domain github.com --selector google
+  ```
+
+## Note
+Technically the mail server isn't being checked, DNS records related to the mail environment are being checked. This script should probably be named mail_oint or check_mail_records. I originally planned to add port probes to the script but have since changed my mind.
