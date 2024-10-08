@@ -6,7 +6,7 @@
 # This code comes with ABSOLUTELY NO WARRANTY.
 #
 # ----------------------------------------------------------------------------------------------------------
-# Name: check_mail_server_protection.py
+# Name: check_mail_server.py
 # Version: 2024.10.07.0950
 # Description: Checks the following email-related attributes for a provided domain:
 #               Mail Servers (MX Records), SPF record, DMARC record, DKIM record, DKIM Encryption level.
