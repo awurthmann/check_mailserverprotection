@@ -24,7 +24,7 @@ import argparse
 def resolve_mx(domain):
     try:
         answers = dns.resolver.resolve(domain, 'MX')
-        return [r.exchange.to_text() for r in answers]
+        return [r.exchange.to_text().lower() for r in answers]
     except Exception as e:
         return f"Error resolving MX records: {e}"
 
