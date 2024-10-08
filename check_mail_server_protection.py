@@ -67,20 +67,31 @@ def check_dkim(selector, domain):
     except Exception as e:
         return f"DKIM record not found for selector '{selector}': {e}"
 
+
 def evaluate_dkim_encryption(dkim_record):
     if not dkim_record:
         return "Unknown"
-    dkim_parts = dkim_record[0].split('=')
-    dkim_chars = len(dkim_parts[-2]) if len(dkim_parts) >= 2 else 0
-    if dkim_chars >= 736:
-        return 4096
-    elif dkim_chars >= 564:
-        return 3072
-    elif dkim_chars >= 392:
-        return 2048
-    elif dkim_chars >= 216:
-        return 1024
+
+    # Look for the part that starts with 'p=', which contains the public key
+    for part in dkim_record:
+        if 'p=' in part:
+            public_key = part.split('p=')[1]
+            key_length = len(public_key)
+
+            # Base64 encoded keys expand the size of the key, so we compare against expected Base64 lengths
+            if key_length >= 684:  # 4096-bit key
+                return 4096
+            elif key_length >= 512:  # 3072-bit key
+                return 3072
+            elif key_length >= 342:  # 2048-bit key
+                return 2048
+            elif key_length >= 170:  # 1024-bit key
+                return 1024
+            else:
+                return "Unknown"
+
     return "Unknown"
+
 
 def main():
     parser = argparse.ArgumentParser(description="Check Mail Server Protection")
